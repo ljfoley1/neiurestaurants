@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <title>Restaurants Near Northeastern Illinois University</title>
+        <link rel="stylesheet" href="leaflet.css" />
+        <script src="leaflet.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        	<script src="RadarChart.js"></script>
+		<script type="text/javascript" src="data.js"></script>
+		<style>
+		#chart {
+  width: 400px;
+  height: 220px;
+}
+#tooltip {
+  opacity: .9;
+  font: 14px/16px Helvetica, sans-serif;
+  text-align: center;
+  color: #777;
+  background: rgba(255,255,255,0.8);
+  padding: 5px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 10;    /* stack order of an element
+                  An element with greater stack order is always in front of an element with a lower stack order
+                  Here we use 10 to make sure the popup is always on top of everything */
+  visibility: hidden;
+  pointer-events: none;
+}
+</style>
+
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/radar.js"></script>
+
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
+    </head>
+
+    <body>
+        <div id="map" style="height: 850px"></div>
+
+		<!-- <div id="tooltip">
+  <svg width="250" height="50"></svg><br></br></br></br><a href=props.giturl target="_blank" style="text-align:center;">Radar Chart</a> <br></br><p style="text-align:center;">props.description</p>
+</div> -->
+
+        <script type="text/javascript">
+
+
+
+          var map = L.map('map').setView([41.9792232,-87.7140577], 16);
+
+         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+              maxZoom: 22,
+              minZoom: 1,
+                         id:'mapbox.streets-basic',
+                         accessToken: 'pk.eyJ1IjoibGpmb2xleTEiLCJhIjoiY2l0M2Z5NXRyMHU2bDJvcGc2aGhwZWYwcSJ9.uIHlejuPOhyFAPve7tLmbA'
+            }).addTo(map);
+
+			 var geojson
+			 
+var marker1 = L.marker([41.9828050,-87.7139300]).addTo(map);
+var marker2 = L.marker([41.9759330,-87.7155870]).addTo(map);
+var marker3 = L.marker([41.9760840,-87.7133950]).addTo(map);
+var marker4 = L.marker([41.9759090,-87.7109910]).addTo(map);
+var marker5 = L.marker([41.9826065,-87.7114594]).addTo(map);
+var marker6 = L.marker([41.9832550,-87.7117860]).addTo(map);
+var marker7 = L.marker([41.9759670,-87.7096710]).addTo(map);
+var marker8 = L.marker([41.9828230,-87.7142940]).addTo(map);
+var marker9 = L.marker([41.9759760,-87.7117360]).addTo(map);
+var marker10 = L.marker([41.9832762,-87.7132512]).addTo(map);
+marker1.bindPopup("Bryn Mawr Breakfast Club offers an eclectic brunch menu. This charming rustic diner offers dishes with Mexican, Greek, Korean and Mediterranean inspirations." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart8" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker2.bindPopup("The Local Pizzeria is a New York inspired joint that serves up the tastiest pizza in town!" + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart3" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker3.bindPopup("Merla's Kitchen provides quality Filipino cuisine whether it be for breakfast, lunch, or dinner." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart5" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker4.bindPopup("Tre Kronor is a hidden gem that brings the taste of Sweden to Chicago with its amazing dishes." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart2" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker5.bindPopup("So Dong Gong has a lot to bring to the table! The menu consists of delicious authentic Korean food." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart0" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker6.bindPopup("Midori Japanese Restaurant is an authentic Japanese eatery that serves everything from sushi to bento boxes." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart9" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker7.bindPopup("2 Asian Brothers caters to those who have a taste for vietnamese cusine and are also in a rush." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart7" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker8.bindPopup("Hunan Wok makes the best Chinese food in town, try it out for yourself and see!" + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart4" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker9.bindPopup("Rice & Roll has a lot of options on the menu. This restaurant creates their own spin on classic Thai, Chinese, and Japanese dishes." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart6" target="_blank" style="text-align:center;">Radar Chart</a>');
+marker10.bindPopup("Booill is Korean barbecue restaurant offering tableside-cooked meats in a colorful setting." + '<br>' + '<br>' + '<a href="http://ljfoley1.github.io/chart1" target="_blank" style="text-align:center;">Radar Chart</a>');
+
+function highlightFeature(e) {
+    var layer = e.target;
+	layer.setStyle({
+         weight: 5,
+         color: '#666',
+         dashArray: '',
+		 fillOpacity: 0.7
+      });
+if (!L.Browser.ie && !L.Browser.opera) {
+         layer.bringToFront();
+      }
+	  d3.select("#tooltip")
+      .style("visibility", "visible")
+	  .style("top", (e.containerPoint.y-100)+"px")
+      .style("left", (e.containerPoint.x-100)+"px");
+	  }
+	  //the following will need to be replicated for each marker:
+	  function resetHighlight(e) {
+      geojson.resetStyle(e.target);
+      <!-- d3.select("#tooltip").style("visibility", "hidden"); -->
+   }
+   function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+    });
+}
+geojson= L.geoJson(data, {
+      onEachFeature: onEachFeature
+         }).addTo(map);
+
+         var svg = d3.select('#tooltip').select("svg").append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g");
+
+        </script>
+
+   </body>
+</html>
